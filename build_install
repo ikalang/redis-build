@@ -1,0 +1,19 @@
+#! /bin/sh
+
+cd redis
+
+# Build
+ALLOCATOR=jemalloc
+make "MALLOC=$ALLOCATOR" V=1
+
+# Test
+#make test
+
+# Install
+INSTALL_PATH=/opt/redis
+make "PREFIX=$INSTALL_PATH" install
+
+# Link
+LINK_BIN_PATH="/usr/local/bin"
+ln -fsv $INSTALL_PATH/bin/redis-server $LINK_BIN_PATH/redis-server
+ln -fsv $INSTALL_PATH/bin/redis-cli $LINK_BIN_PATH/redis-cli
